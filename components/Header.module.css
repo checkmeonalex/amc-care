@@ -1,0 +1,165 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  height: 68px;
+  background: transparent;
+  border-radius: 0;
+  transition:
+    top 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    left 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    right 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.4s ease,
+    border-radius 0.4s ease,
+    box-shadow 0.4s ease,
+    padding 0.4s ease;
+}
+
+/* Shrunk floating pill */
+.scrolled {
+  top: 12px;
+  left: max(1rem, calc(50% - 410px));
+  right: max(1rem, calc(50% - 410px));
+  height: 52px;
+  padding: 0 1.4rem;
+  background: rgba(18, 18, 18, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 999px;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.22);
+}
+
+/* Left nav */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+  flex: 1;
+}
+
+.left a {
+  color: #111;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s, color 0.3s;
+}
+
+.scrolled .left a {
+  color: #fff;
+}
+
+.left a:hover {
+  opacity: 1;
+}
+
+/* Brand */
+.brand {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+/* Right actions */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.login {
+  color: #111;
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.8;
+  transition: opacity 0.2s, color 0.3s;
+}
+
+.scrolled .login {
+  color: #fff;
+}
+
+.login:hover {
+  opacity: 1;
+}
+
+.cta {
+  color: #fff;
+  background: #1565c0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.scrolled .cta {
+  background: #fff;
+  color: #111;
+}
+
+.scrolled .cta:hover {
+  background: #e8e8e8;
+}
+
+.cta:hover {
+  background: #0d47a1;
+}
+
+/* 3×3 dot grid button */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 5px);
+  grid-template-rows: repeat(3, 5px);
+  gap: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.grid:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.scrolled .grid:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.grid svg {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .left {
+    display: none;
+  }
+
+  .login {
+    display: none;
+  }
+
+  .brand {
+    flex: unset;
+    justify-content: flex-start;
+  }
+
+  .scrolled {
+    width: calc(100vw - 2rem);
+  }
+}

@@ -1,0 +1,1004 @@
+/* ── Page shell — 50 / 50 split ── */
+.page {
+  min-height: 100vh;
+  padding-top: 68px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f5f4f1;
+}
+
+/* ── Left — scanner panel ── */
+.left {
+  background: #fff;
+  border-right: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 68px);
+  overflow: hidden;
+}
+
+/* ── Right — medical results panel ── */
+.right {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 68px);
+  overflow: hidden;
+  padding: 0;
+  gap: 0;
+}
+
+/* ── Panel header ── */
+.panelHeader {
+  padding: 1.2rem 1.6rem 0.7rem;
+  flex-shrink: 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #5046e4;
+  background: #ede9fe;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  margin-bottom: 0.55rem;
+}
+
+.panelTitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.panelSub {
+  font-size: 0.8rem;
+  color: #aaa;
+  line-height: 1.5;
+}
+
+/* ── Scan frame wrapper — fills all space between header and controls ── */
+.scanFrameWrapper {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* ── Scan area — full width, height driven by inline aspect-ratio ── */
+.scanArea {
+  position: relative;
+  width: 100%;
+  max-height: 100%;   /* never taller than the wrapper */
+  /* aspect-ratio comes from inline style (imgAspect) — height is auto */
+  background: #0e0e0f;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: aspect-ratio 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 0 1.5px rgba(79, 195, 247, 0.15),
+              0 24px 64px rgba(0, 0, 0, 0.22);
+}
+
+/* ── Corner bracket animations ── */
+
+/* Idle: slow glow breathe */
+@keyframes cornerBreathe {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(79,195,247,0.4)); opacity: 0.6; }
+  50%       { filter: drop-shadow(0 0 10px rgba(79,195,247,0.95)); opacity: 1; }
+}
+
+/* Scanning: fast sharp pulse */
+@keyframes cornerScan {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(79,195,247,0.9));  opacity: 1;   }
+  50%       { filter: drop-shadow(0 0 20px rgba(0,229,255,1.0));  opacity: 0.7; }
+}
+
+/* Done: one-shot green flash then settle */
+@keyframes cornerDone {
+  0%   { border-color: #34d399; filter: drop-shadow(0 0 14px rgba(52,211,153,1)); }
+  60%  { border-color: #34d399; filter: drop-shadow(0 0 6px rgba(52,211,153,0.5)); }
+  100% { border-color: #4fc3f7; filter: drop-shadow(0 0 6px rgba(79,195,247,0.7)); }
+}
+
+/* Corner brackets — large, glowing, matches phone mockup */
+.corner {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-color: #4fc3f7;
+  border-style: solid;
+  border-width: 0;
+  z-index: 10;
+  pointer-events: none;
+  animation: cornerBreathe 2.6s ease-in-out infinite;
+}
+.cornerTL { top: 14px;    left: 14px;  border-top-width: 3px;    border-left-width: 3px;   border-radius: 4px 0 0 0; }
+.cornerTR { top: 14px;    right: 14px; border-top-width: 3px;    border-right-width: 3px;  border-radius: 0 4px 0 0; }
+.cornerBL { bottom: 14px; left: 14px;  border-bottom-width: 3px; border-left-width: 3px;   border-radius: 0 0 0 4px; }
+.cornerBR { bottom: 14px; right: 14px; border-bottom-width: 3px; border-right-width: 3px;  border-radius: 0 0 4px 0; }
+
+/* Override animations per scan state — applied via data-state on scanArea */
+.scanArea[data-state="extracting"] .corner {
+  animation: cornerScan 0.8s ease-in-out infinite;
+}
+
+.scanArea[data-state="done"] .corner {
+  animation: cornerDone 1.2s ease-out forwards;
+}
+
+/* Idle state */
+.scanIdle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.idleIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 0.25rem;
+}
+
+.idleText  { font-size: 0.82rem; color: rgba(255,255,255,0.5); font-weight: 500; }
+.idleHint  { font-size: 0.72rem; color: rgba(255,255,255,0.22); }
+
+/* Previews — minimal padding so document fills the frame */
+.previewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 3px;
+}
+
+.previewPdf {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #fff;
+}
+
+.previewFile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.previewFileIcon { font-size: 2.6rem; line-height: 1; }
+
+.previewFileName {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.7);
+  font-weight: 600;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.previewFileSize { font-size: 0.68rem; color: rgba(255,255,255,0.3); }
+
+/* Scanning beam */
+@keyframes scan {
+  0%   { top: 0%; }
+  100% { top: calc(100% - 3px); }
+}
+
+.scanBeam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(124,58,237,0.3) 10%,
+    #7c3aed 35%,
+    #a78bfa 50%,
+    #7c3aed 65%,
+    rgba(124,58,237,0.3) 90%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 16px 5px rgba(124,58,237,0.55),
+    0 0 40px 14px rgba(124,58,237,0.2);
+  z-index: 20;
+  animation: scan 2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Extracting label */
+.scanLabel {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(79,195,247,0.3);
+  border-radius: 999px;
+  padding: 0.28rem 0.8rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #4fc3f7;
+  white-space: nowrap;
+  z-index: 30;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+.scanDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #4fc3f7;
+  animation: blink 1s ease-in-out infinite;
+}
+
+/* Done badge */
+.doneBadge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #059669;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.22rem 0.65rem;
+  z-index: 30;
+}
+
+/* Stop button — pinned bottom-left inside the scan frame */
+.stopBtn {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 100, 100, 0.4);
+  border-radius: 999px;
+  padding: 0.28rem 0.75rem 0.28rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ff6b6b;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.stopBtn:hover {
+  background: rgba(180, 30, 30, 0.75);
+  border-color: rgba(255, 100, 100, 0.7);
+  color: #fff;
+}
+
+.stopIcon {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* Rescan button — same weight as ghost but purple tint */
+.rescanBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0.82rem;
+  background: #ede9fe;
+  color: #5046e4;
+  border: 1.5px solid #c4b5fd;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.rescanBtn:hover {
+  background: #ddd6fe;
+  border-color: #7c3aed;
+}
+
+/* Error overlay */
+.errorOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(180,30,30,0.12);
+  color: #ff6b6b;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.78rem;
+  z-index: 20;
+}
+
+/* ── Controls — pinned at the bottom of the left panel ── */
+.controls {
+  flex-shrink: 0;
+  padding: 0.75rem 1.6rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.hiddenInput { display: none; }
+
+.uploadRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+}
+
+.uploadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0.8rem;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+.uploadBtn:hover { background: #2a2a2a; transform: translateY(-1px); }
+
+.uploadBtnSecondary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0.8rem;
+  background: #f4f4f4;
+  color: #333;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.uploadBtnSecondary:hover { background: #ebebeb; }
+
+.actionRow {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.ctaBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0.85rem;
+  background: #5046e4;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.12s;
+}
+.ctaBtn:hover { background: #3d35c0; transform: translateY(-1px); }
+
+.ghostBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0.82rem;
+  background: none;
+  color: #666;
+  border: 1.5px solid #e4e4e4;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s;
+}
+.ghostBtn:hover { border-color: #111; color: #111; }
+
+/* Extracting progress */
+.extractingStatus {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+@keyframes progressPulse {
+  0%   { width: 15%; }
+  50%  { width: 78%; }
+  100% { width: 92%; }
+}
+
+.progressTrack {
+  height: 3px;
+  background: #f0f0f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, #5046e4, #818cf8);
+  border-radius: 999px;
+  animation: progressPulse 3s ease-in-out infinite;
+}
+
+.extractingHint {
+  font-size: 0.72rem;
+  color: #bbb;
+  text-align: center;
+}
+
+/* File pill */
+.filePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #f8f8f8;
+  border: 1px solid #e8e8e8;
+  border-radius: 999px;
+  padding: 0.28rem 0.6rem 0.28rem 0.75rem;
+  font-size: 0.72rem;
+  max-width: 100%;
+  align-self: flex-start;
+}
+
+.filePillName {
+  font-weight: 600;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 160px;
+}
+
+.filePillSize  { color: #aaa; flex-shrink: 0; }
+
+.filePillRemove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.12s;
+}
+.filePillRemove:hover { color: #333; }
+
+/* Error panel (left side) */
+.errorPanel {
+  margin: 0.8rem 1.6rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: #fff5f5;
+  border: 1.5px solid #fecaca;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  color: #991b1b;
+}
+
+.errorTitle { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.15rem; }
+.errorMsg   { font-size: 0.76rem; color: #b91c1c; line-height: 1.5; }
+
+.retryBtn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: #991b1b;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.retryBtn:hover { background: #7f1d1d; }
+
+/* ── RIGHT PANEL — Medical results ── */
+
+/* Empty / idle state */
+.resultsEmpty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  padding: 2rem;
+  color: #ccc;
+}
+
+.resultsEmptyIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f0f0f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c0c0cc;
+}
+
+.resultsEmptyText { font-size: 0.82rem; color: #bbb; font-weight: 500; }
+.resultsEmptyHint { font-size: 0.73rem; color: #d0d0d8; }
+
+/* Scanning state */
+.resultsScanningState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.96); }
+}
+
+.resultsPulse {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ede9fe, #c4b5fd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5046e4;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.resultsScanningText {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #5046e4;
+}
+
+/* Results header */
+.resultsHeader {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  border: 1px solid #ebebeb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.resultsHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.resultsHeaderTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.confidenceBadge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #059669;
+  background: #d1fae5;
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+}
+
+.flagSummary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.flagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.18rem 0.6rem;
+}
+
+.flagChipWarn { color: #92400e; background: #fef3c7; }
+.flagChipCrit { color: #991b1b; background: #fee2e2; }
+.flagChipOk   { color: #065f46; background: #d1fae5; }
+
+/* Lab values table */
+.labTable {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #ebebeb;
+  overflow: hidden;
+}
+
+.labTableHead {
+  display: grid;
+  grid-template-columns: 1fr 80px 72px 96px 52px;
+  padding: 0.55rem 1rem;
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 0.5rem;
+}
+
+.labTableHeadCell {
+  font-size: 0.63rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #bbb;
+}
+
+.labRow {
+  display: grid;
+  grid-template-columns: 1fr 80px 72px 96px 52px;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #f7f7f7;
+  gap: 0.5rem;
+  align-items: center;
+  transition: background 0.1s;
+}
+.labRow:last-child { border-bottom: none; }
+.labRow:hover { background: #fafafa; }
+
+.labRowCritical { background: #fff5f5; }
+.labRowCritical:hover { background: #fee2e2; }
+
+.labRowHigh { background: #fffbeb; }
+.labRowLow  { background: #eff6ff; }
+
+.labTestName {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.labValue {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #111;
+  font-variant-numeric: tabular-nums;
+}
+
+.labUnit {
+  font-size: 0.72rem;
+  color: #999;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.labRange {
+  font-size: 0.7rem;
+  color: #bbb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.62rem;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 0.18rem 0.45rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.statusNormal   { background: #d1fae5; color: #065f46; }
+.statusHigh     { background: #fef3c7; color: #92400e; }
+.statusLow      { background: #dbeafe; color: #1e40af; }
+.statusCritical { background: #fee2e2; color: #991b1b; }
+.statusUnknown  { background: #f3f4f6; color: #9ca3af; }
+
+
+/* ── Note card — clean document summary ── */
+
+.noteCard {
+  background: #fff;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.noteHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem 1rem;
+  border-bottom: 1px solid #f2f2f2;
+  flex-shrink: 0;
+}
+
+.noteTitle {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+.noteFileMeta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 0.22rem;
+  font-size: 0.68rem;
+  color: #aaa;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.noteStatus {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #7c3aed;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Note body — clean scrollable area ── */
+.noteBody {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding: 0.2rem 0 0.5rem;
+}
+
+.noteSection {
+  padding: 0.85rem 1.25rem 0.6rem;
+  border-bottom: 1px solid #f5f5f5;
+}
+.noteSection:last-child { border-bottom: none; }
+
+/* ── Skeleton shimmer ── */
+@keyframes shimmer {
+  0%   { background-position: -700px 0; }
+  100% { background-position:  700px 0; }
+}
+
+.skeletonBody {
+  flex: 1;
+  overflow: hidden;
+  padding: 1.2rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.skeletonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.skeletonBar {
+  height: 13px;
+  border-radius: 7px;
+  background: linear-gradient(
+    90deg,
+    #efefef 25%,
+    #e2e2e2 50%,
+    #efefef 75%
+  );
+  background-size: 1400px 100%;
+  animation: shimmer 1.3s ease-in-out infinite;
+}
+
+/* Skeleton label bar — slightly darker, narrower */
+.skeletonLabel {
+  height: 13px;
+  width: 28%;
+  border-radius: 7px;
+  background: linear-gradient(
+    90deg,
+    #e2e2e2 25%,
+    #d5d5d5 50%,
+    #e2e2e2 75%
+  );
+  background-size: 1400px 100%;
+  animation: shimmer 1.3s ease-in-out infinite;
+  margin-bottom: 0.2rem;
+}
+
+/* Status pulsing dot for skeleton header */
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+.noteStatusBlink {
+  animation: statusBlink 1.1s ease-in-out infinite;
+}
+
+/* ── Pour-in animation ── */
+@keyframes pourIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+.noteSectionLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.01em;
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: pourIn 0.18s ease-out both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.noteSectionDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  /* background set inline */
+}
+
+.noteLine {
+  display: block;
+  font-size: 0.78rem;
+  color: #444;
+  line-height: 1.65;
+  padding-left: 0.1rem;
+  word-break: break-word;
+  animation: pourIn 0.18s ease-out both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.noteLine::before {
+  content: "•  ";
+  color: #ccc;
+}
+
+.noteLineEmpty {
+  font-size: 0.73rem;
+  color: #ccc;
+  font-style: italic;
+  padding-left: 0.1rem;
+  animation: pourIn 0.18s ease-out both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.noteFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-top: 1px solid #f2f2f2;
+  flex-shrink: 0;
+}
+
+.noteFooterLabel {
+  font-size: 0.65rem;
+  color: #bbb;
+}
+
+.noteQualityChip {
+  font-size: 0.63rem;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 0.13rem 0.5rem;
+}
+
+/* ── Mobile ── */
+@media (max-width: 960px) {
+  .page { grid-template-columns: 1fr; }
+
+  /* On mobile the left panel scrolls naturally */
+  .left {
+    border-right: none;
+    height: auto;
+    overflow: visible;
+  }
+
+  .scanFrameWrapper {
+    flex: none;
+    height: 55vw;
+    min-height: 240px;
+    padding: 8px;
+  }
+
+  .right {
+    border-top: 1px solid #e8e8e8;
+    min-height: auto;
+    padding: 1.2rem;
+  }
+
+  .panelHeader { padding: 1.2rem 1rem 0.7rem; }
+  .controls { padding: 0.7rem 1rem 1.2rem; }
+  .errorPanel { margin: 0.5rem 1rem; }
+
+  .labTableHead,
+  .labRow { grid-template-columns: 1fr 60px 52px 72px 40px; }
+}

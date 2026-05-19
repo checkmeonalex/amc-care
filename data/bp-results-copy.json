@@ -1,0 +1,417 @@
+{
+  "page": {
+    "emptyReadings": "No readings found.",
+    "takeMeasurement": "Take a measurement →",
+    "metaTitle": "Blood Pressure Results — AMC Care",
+    "metaDescription": "Your blood pressure analysis and recommendations.",
+    "title": "Blood Pressure Analysis",
+    "retake": "Retake",
+    "readingSingular": "reading",
+    "readingPlural": "readings",
+    "averagedFrom": "averaged from",
+    "emergencyBanner": "Seek urgent medical attention immediately",
+    "sys": "SYS",
+    "dia": "DIA",
+    "mmHg": "mmHg",
+    "bpm": "bpm",
+    "average": "Average:",
+    "viewReadingDetails": "View reading details",
+    "yourReadings": "Your readings",
+    "aiOverview": "AI Overview",
+    "aiGenerating": "Generating…",
+    "aiErrorVariants": [
+  "The AI Summary is unavailable right now, but your result is still shown above.",
+  "The AI Summary could not load right now. Rest and test again if needed.",
+  "The AI Summary is temporarily unavailable. Please use the result shown above for now.",
+  "The AI Summary could not load right now. If your readings stay high or low, speak with a doctor.",
+  "The AI Summary is unavailable right now. Your blood pressure result is still available above.",
+  "The AI Summary could not be loaded. If you feel unwell or keep getting the same result, speak with a doctor."
+],
+
+    "reliabilityTitle": "How reliable is this result?",
+    "scoreSuffix": "%",
+    "meaningTitle": "What does this mean?",
+    "recommendationTitle": "What to do next",
+    "measureAgain": "Measure again",
+    "relatedReading": "Related reading",
+    "articles": "articles",
+    "close": "Close"
+  },
+  "readingStatus": {
+    "used": "Used",
+    "flagged": "Not used — too different",
+    "firstExcluded": "Not used — first-test effect",
+    "excluded": "Not used"
+  },
+  "reliabilityLabels": {
+    "high": [
+      "Machine Accuracy: Excellent"
+    ],
+    "moderate": [
+      "Machine Accuracy: Good"
+    ],
+    "low": [
+      "Machine Accuracy: Fair"
+    ]
+  },
+  "categories": {
+    "low": {
+      "label": "Lower than Normal",
+      "color": "#1565C0",
+      "bg": "linear-gradient(135deg, #1a237e 0%, #1565C0 100%)",
+      "textColor": "#fff",
+    "descriptionVariants": [
+  "Your blood pressure is a little lower than normal.",
+  "Your blood pressure is lower than the usual healthy range.",
+  "Your reading is on the low side for most adults.",
+  "Your blood pressure looks lower than we would normally expect.",
+  "These numbers show lower-than-normal blood pressure.",
+  "Your blood pressure is slightly below the normal range.",
+  "This reading shows your blood pressure is running low.",
+  "Your result is a bit lower than the usual range for adults."
+],
+      "meaningVariants": [
+        "Low blood pressure can sometimes make you feel dizzy, lightheaded, or faint, especially when you stand up quickly. For some people, including very active adults, it can also be normal.",
+        "A lower reading can be harmless for some people, but symptoms matter. Dizziness, weakness, fainting, or blurred vision make this more important to follow up.",
+        "This result means your blood pressure is below the usual adult range. If you feel well, it may simply be your normal pattern, but symptoms should not be ignored.",
+        "Lower blood pressure can happen after dehydration, missed meals, rest, or some medicines. How you feel is the most important clue.",
+        "These numbers are not automatically dangerous, but they can explain lightheadedness or faint feelings in some people. Rechecking after rest and fluids can help.",
+        "A low result may be normal for your body, especially if it is common for you. If this is new or comes with symptoms, it deserves attention.",
+        "Your heart may not be pushing pressure through the vessels as strongly as usual. That can be fine, but dizziness or fainting changes the concern level.",
+        "This reading sits below the common adult range. It is worth comparing it with your usual numbers and any symptoms you have right now."
+      ],
+      "recommendationVariants": [
+        "Pay attention to how you feel. If you get dizzy often, feel faint, or have blurred vision, it is worth talking to your doctor.",
+        "Sit down if you feel lightheaded, drink water, and retest after resting. If the low readings continue or symptoms appear, speak with a clinician.",
+        "If you feel fine, keep monitoring over the next few weeks. If you feel weak, dizzy, or faint, arrange medical advice.",
+        "Rest for a few minutes and check again if this result is unusual for you. Persistent low readings should be discussed with a healthcare professional.",
+        "Make sure you are hydrated and have eaten normally. Get help promptly if you faint, feel confused, or have chest pain.",
+        "Track whether this happens repeatedly. A pattern of low readings, especially with symptoms, is worth reviewing with your doctor.",
+        "Avoid standing up too quickly today. If dizziness or fainting happens, do not ignore it.",
+        "Use this as a reason to watch your symptoms closely. If the number stays low or you feel unwell, contact a healthcare professional."
+      ]
+    },
+    "normal": {
+      "label": "Normal",
+      "color": "#2E7D32",
+      "bg": "linear-gradient(135deg, #1B5E20 0%, #388E3C 100%)",
+      "textColor": "#fff",
+      "descriptionVariants": [
+  "Your blood pressure looks good.",
+  "Nice — these numbers are in a healthy range.",
+  "Your reading is right where we want it to be.",
+  "Good news — this result looks healthy for most adults.",
+  "Your blood pressure is sitting in a good place.",
+  "These readings suggest your blood pressure is well balanced.",
+  "Your result falls within the normal blood pressure range.",
+  "Great stuff — your numbers are in the range we usually like to see."
+],
+"meaningVariants": [
+  "This is a healthy blood pressure range. Your blood pressure is in a normal zone.",
+  "Good news — your blood pressure is in a stable range. Keeping steady habits can help it stay that way.",
+  "Your result falls in the normal range for most adults. That usually means there is no immediate blood pressure concern from this reading.",
+  "This reading shows a healthy balance between your top (SYS) and bottom (DIA) numbers. It’s a good result to use as your normal reference over time.",
+  "Your blood pressure is not showing a high or low pattern in this result. That’s a good sign, especially if it matches your usual readings.",
+  "This is the range most people aim for. It suggests your blood pressure is in a normal range right now.",
+  "Your numbers look stable and steady. Regular checks can help you notice changes early.",
+  "Nice — this result is reassuring for a home blood pressure check. Keep tracking it from time to time so you know your normal pattern."
+],
+
+      "recommendationVariants": [
+        "Keep doing what you are doing. Checking your blood pressure every few months is a good habit, just to stay aware of changes.",
+        "Maintain simple habits like regular movement, moderate salt, enough sleep, and stress control. Recheck occasionally to keep a baseline.",
+        "No urgent action is needed from this reading. Keep a record so future readings are easier to compare.",
+        "Stay consistent with healthy routines and check again from time to time. Trends are more useful than one isolated reading.",
+        "Use this as your baseline. If future readings rise or symptoms appear, compare them with this result.",
+        "Keep monitoring at a comfortable interval, especially if you have risk factors or a family history of high blood pressure.",
+        "Continue the habits that support this result, including activity, hydration, and balanced meals.",
+        "Save this result mentally as a good reference point. Repeat checks occasionally under similar resting conditions."
+      ]
+    },
+
+    
+   "elevated": {
+  "label": "A Little High",
+  "color": "#F57F17",
+  "bg": "linear-gradient(135deg, #E65100 0%, #F9A825 100%)",
+  "textColor": "#fff",
+  "descriptionVariants": [
+    "Your blood pressure is a little higher than normal.",
+    "Your top (SYS) number is slightly above the usual range.",
+    "This reading is mildly raised, but not in the high range.",
+    "Your result is just a bit above where we would like it to be.",
+    "These numbers are slightly above normal.",
+    "Your blood pressure is a little higher than your usual range.",
+    "This result shows a small rise in blood pressure.",
+    "Your reading is slightly above the normal target range."
+  ],
+   "meaningVariants": [
+  "Your top (SYS) number is a little above the healthy range. This is not an emergency, but it’s a sign to keep an eye on it.",
+  "This result shows a mild rise in blood pressure. Things like stress, salt, caffeine, or rushing can temporarily raise it.",
+  "A slightly higher reading can be an early sign to watch your blood pressure over time. It’s best checked with more readings.",
+  "Your blood pressure is not dangerously high, but it is above the ideal range. Small lifestyle changes can help bring it down.",
+  "This range often improves with simple changes. The most important thing is seeing if it stays like this over time.",
+  "Your blood pressure is a bit higher than ideal. One reading alone is not a diagnosis, but it’s worth tracking.",
+  "This result is between normal and high. It’s a useful early warning to pay attention to your blood pressure and reduce stress level.",
+  "A mildly raised reading can happen for many normal reasons. Retesting in a calm state helps confirm it."
+],
+
+      "recommendationVariants": [
+        "Try cutting back on salt, caffeine, and alcohol. A short walk each day can also help bring the numbers down.",
+        "Rest, recheck on another day, and watch the trend. If it stays elevated, mention it to your doctor at your next visit.",
+        "Focus on small changes this week: less salty food, more movement, and better sleep. Then compare your next readings.",
+        "Check again after a few calm days. Persistent elevation is worth discussing with a healthcare professional.",
+        "Avoid measuring right after coffee, exercise, stress, or smoking. A quiet repeat reading will be more useful.",
+        "Keep a simple BP log for the next few weeks. Patterns matter more than one number.",
+        "Use this as an early nudge to adjust lifestyle habits. If the readings keep climbing, book a routine review.",
+        "Retest at rest and compare. If this becomes your usual range, ask a clinician what target is right for you."
+      ]
+    },
+    "stage1": {
+      "label": "Mildly High",
+      "color": "#BF360C",
+      "bg": "linear-gradient(135deg, #BF360C 0%, #E64A19 100%)",
+      "textColor": "#fff",
+     "descriptionVariants": [
+  "Your blood pressure is in the mildly high range.",
+  "These numbers are higher than ideal and worth paying attention to.",
+  "Your result suggests mild high blood pressure.",
+  "This reading is above the healthy range.",
+  "Your blood pressure is a bit higher than it should be.",
+  "These readings show your blood pressure is running high.",
+  "Your result is in a range where follow-up is a good idea.",
+  "Your numbers are above the range most adults should aim for."
+],
+      "meaningVariants": [
+        "Your blood pressure is higher than it should be. It does not mean something is seriously wrong right now, but it should not be ignored.",
+        "This range can place extra strain on your heart and blood vessels over time. Repeated readings matter most.",
+        "A mildly high result is a sign to take action early. Lifestyle changes and medical guidance can prevent it from getting worse.",
+        "This is above the usual healthy range. If it repeats, it may need a plan with your doctor.",
+        "Your numbers suggest your blood pressure may be running high beyond a one-off fluctuation. Tracking will help confirm that.",
+        "This result is not usually an emergency, but it is important. Long-term high readings can raise health risks.",
+        "Your heart may be working harder than ideal. The goal is to bring this down before it becomes more serious.",
+        "This reading deserves follow-up, especially if similar numbers have appeared before."
+      ],
+      "recommendationVariants": [
+        "It is worth booking an appointment with your doctor, not urgently, but soon. In the meantime, reduce salt and keep moving daily.",
+        "Start a simple blood pressure log and repeat readings over several days. Share the pattern with your doctor.",
+        "Cut back on salt, avoid smoking, limit alcohol, and add short daily walks. These steps can help while you arrange follow-up.",
+        "Schedule a routine medical review if readings stay in this range. Do not wait months to see whether it disappears.",
+        "Measure again on a calm day and compare. If the range repeats, ask your doctor what next step is right for you.",
+        "Make lifestyle changes now and keep a record. Early action is easier than waiting for the numbers to rise further.",
+        "If you already take BP medication, do not change it yourself. Discuss repeated high readings with your clinician.",
+        "Use this result as a prompt to follow up soon, especially if you have diabetes, kidney disease, chest symptoms, or a family history."
+      ]
+    },
+    "stage2": {
+      "label": "High",
+      "color": "#B71C1C",
+      "bg": "linear-gradient(135deg, #7F0000 0%, #C62828 100%)",
+      "textColor": "#fff",
+      "descriptionVariants": [
+        "Your blood pressure is in the high range.",
+        "These numbers are clearly above the healthy range.",
+        "Your result shows high blood pressure.",
+        "This reading is high enough that it should not be ignored.",
+        "Your blood pressure is running at a concerning level.",
+        "These readings suggest your heart is under extra strain.",
+        "Your result is in a range that needs medical follow-up.",
+        "Your numbers are high and need attention soon."
+      ],
+      "meaningVariants": [
+        "Your blood pressure is quite high. At this level, your heart and blood vessels may be under real strain.",
+        "This range is more concerning than a mild rise. If it repeats, it needs medical follow-up soon.",
+        "High blood pressure at this level can increase health risk over time. It is important to take the result seriously.",
+        "These numbers suggest your body is dealing with more pressure than it should. A clinician can help decide the safest plan.",
+        "This result is not something to brush aside. The good news is that blood pressure can often be improved with the right steps.",
+        "A reading in this range deserves prompt attention, especially if it is not unusual for you.",
+        "Your vessels and heart may be working harder than they should. Confirming the reading and getting advice is important.",
+        "This result is high enough that waiting too long for follow-up would not be wise."
+      ],
+      "recommendationVariants": [
+        "Please see a doctor within the next few days, especially if your readings are consistently this high.",
+        "Rest and recheck, then arrange medical advice soon if the reading remains high. Do not stop medication on your own.",
+        "Book a clinical review promptly. Bring your readings so your doctor can see the pattern.",
+        "If this is repeated, contact your doctor soon for guidance. Lifestyle changes may help, but medication may also be needed.",
+        "Avoid heavy activity for now if you feel unwell, and get medical advice. Seek urgent help if severe symptoms appear.",
+        "Check again after resting quietly. If it stays in this range, speak with a healthcare professional within days.",
+        "Take this seriously and make a follow-up plan. Do not rely on one home reading alone, but do not ignore repeated highs.",
+        "If you have chest pain, trouble breathing, weakness, severe headache, or vision changes, seek emergency help immediately."
+      ]
+    },
+    "crisis": {
+      "label": "Dangerously High",
+      "color": "#B71C1C",
+      "bg": "linear-gradient(135deg, #4a0000 0%, #B71C1C 100%)",
+      "textColor": "#fff",
+      "descriptionVariants": [
+        "Your blood pressure is dangerously high.",
+        "This reading is at a level that needs urgent attention.",
+        "Your numbers are extremely high right now.",
+        "This result is in a serious blood pressure range.",
+        "Your blood pressure is high enough to treat as urgent.",
+        "These numbers are far above the safe range.",
+        "Your result suggests a dangerously elevated reading.",
+        "This reading is high enough to take immediate action."
+      ],
+      "meaningVariants": [
+        "Your top (SYS) or bottom (DIA) number is very high. Sit down quietly, breathe slowly, and test again after a few minutes.",
+        "This range can be dangerous, especially if it stays high or comes with symptoms. A repeat reading is important, but do not delay help if you feel unwell.",
+        "This result is high enough to need urgent attention today. Stress or rushing can raise numbers, but repeated crisis-level readings matter.",
+        "A reading this high can put strain on the heart, brain, kidneys, and blood vessels. Symptoms make it more urgent.",
+        "This is not a result to ignore. Recheck after resting, and treat repeated numbers in this range as needing same-day care.",
+        "Your blood pressure is far above the usual range. If this remains high, medical help is needed today.",
+        "This level may represent a hypertensive crisis. The safest next step depends on repeat readings and symptoms.",
+        "These numbers are serious. If they are accurate or repeat after rest, you need urgent medical guidance."
+      ],
+      "recommendationVariants": [
+        "If you have chest pain, trouble breathing, severe headache, weakness, or vision problems, call emergency services immediately.",
+        "Rest for 5–10 minutes and retest. If it is still this high, call your doctor or go to a clinic today.",
+        "Do not drive yourself if you feel unwell. Get urgent medical help if symptoms are present.",
+        "Repeat the reading after sitting quietly. If the number stays at this level, seek same-day medical care.",
+        "Treat this as urgent, especially if it is not your usual pattern. Get help now if symptoms appear.",
+        "If you are alone and feel chest pain, breathlessness, confusion, weakness, or severe headache, call emergency services.",
+        "Do not wait days to follow this up. A repeated crisis-level reading needs medical attention today.",
+        "Check that the cuff is fitted correctly, retest calmly, and act quickly if the result remains dangerously high."
+      ]
+    }
+  },
+  "analysis": {
+    "warnings": {
+      "invalidOrder": [
+        "Reading {{readingNumber}}: Your top (SYS) number ({{sys}}) should always be higher than your bottom (DIA) number ({{dia}}). This reading may have been entered the wrong way around — check your machine and try again.",
+        "Reading {{readingNumber}}: SYS {{sys}} is not higher than DIA {{dia}}. Please check whether the numbers were entered in the wrong order.",
+        "Reading {{readingNumber}}: The top (SYS) and bottom (DIA) numbers do not look correctly ordered. Recheck the monitor display before relying on this result.",
+        "Reading {{readingNumber}}: Systolic pressure should be above diastolic pressure. These values may need to be re-entered.",
+        "Reading {{readingNumber}}: The entered numbers look reversed or invalid because {{sys}} is not above {{dia}}.",
+        "Reading {{readingNumber}}: This reading may be inaccurate because the SYS value is not higher than the DIA value.",
+        "Reading {{readingNumber}}: Check this entry again. The top (SYS) number should be greater than the bottom (DIA) number.",
+        "Reading {{readingNumber}}: These values are unusual together, so confirm the machine display and retake if needed."
+      ],
+      "unusualRange": [
+        "Reading {{readingNumber}}: The numbers you entered ({{sys}}/{{dia}}) are lower than what is commonly seen. If you feel dizzy, weak, or faint, consider testing again or speaking with a doctor.",
+        "Reading {{readingNumber}}: {{sys}}/{{dia}} is outside the usual home-reading range. Retest carefully and get advice if you feel unwell.",
+        "Reading {{readingNumber}}: These numbers are unusual for most adults. Check the cuff position and repeat the measurement if needed.",
+        "Reading {{readingNumber}}: This result falls outside the expected range. If symptoms are present, speak with a healthcare professional.",
+        "Reading {{readingNumber}}: {{sys}}/{{dia}} may reflect an inaccurate reading or a value that needs medical attention if it repeats.",
+        "Reading {{readingNumber}}: The values are uncommon enough to double-check. Rest, retake, and compare the next result.",
+        "Reading {{readingNumber}}: This reading is unusual. If it matches how you feel or keeps happening, contact a clinician.",
+        "Reading {{readingNumber}}: The entered pressure is outside common limits, so confirm the numbers before relying on it."
+      ],
+      "unusualPulse": [
+        "Reading {{readingNumber}}: A pulse of {{pulse}} bpm is unusual. You may have moved your arm during the reading — try staying still and retesting.",
+        "Reading {{readingNumber}}: {{pulse}} bpm is outside the usual resting pulse range. Retake the reading after sitting still.",
+        "Reading {{readingNumber}}: The pulse value looks unusual. Check that the cuff was fitted well and repeat if needed.",
+        "Reading {{readingNumber}}: A pulse reading of {{pulse}} bpm may be inaccurate or clinically important if it repeats.",
+        "Reading {{readingNumber}}: This pulse value is uncommon. Rest quietly, retest, and seek advice if you feel unwell.",
+        "Reading {{readingNumber}}: {{pulse}} bpm deserves a second look, especially if you had symptoms during the reading.",
+        "Reading {{readingNumber}}: The pulse number is unusual enough to verify with another calm measurement.",
+        "Reading {{readingNumber}}: If {{pulse}} bpm is accurate and you feel unwell, consider urgent medical advice."
+      ],
+      "spreadTooHigh": [
+        "Your readings changed too much between tests (a difference of {{spread}} points in the top (SYS) number). This can happen if you moved, talked, or did not sit still. Rest quietly for 5 minutes and try again for the most accurate result.",
+        "Your top (SYS) number varied by {{spread}} points, which is more than expected. Rest quietly and repeat the set if you can.",
+        "The readings were not steady enough, with a {{spread}}-point systolic gap. Movement, talking, or stress may have affected them.",
+        "There was a large difference of {{spread}} points between readings. A calmer repeat test may give a clearer result.",
+        "Your readings moved around by {{spread}} points. Try measuring again after sitting still for a few minutes.",
+        "The spread between tests was {{spread}} points, so this result has lower confidence. Retesting can help.",
+        "A {{spread}}-point change suggests one or more readings may have been affected by position, stress, or movement.",
+        "Your numbers shifted more than expected between tests. Rest, keep the cuff still, and repeat if possible."
+      ],
+      "totalSpreadTooHigh": [
+        "Your readings changed a lot between tests ({{totalSpread}} points difference in the top (SYS) number). Movement, stress, or an irregular heartbeat may have affected one or more readings. Consider resting quietly for 5 minutes and testing again.",
+        "Across the set, your top (SYS) number varied by {{totalSpread}} points. That makes the result less certain and worth repeating.",
+        "There was a {{totalSpread}}-point swing between readings. A quiet retest can help confirm the true pattern.",
+        "Your readings were not very consistent, with {{totalSpread}} points between the highest and lowest SYS values.",
+        "The total systolic spread was {{totalSpread}} points, which may mean one reading was affected by movement or stress.",
+        "A {{totalSpread}}-point difference across readings is larger than expected. Rest and repeat if the result seems off.",
+        "Your numbers changed substantially during the set. Consider retesting under calmer conditions.",
+        "The readings varied enough to reduce confidence. If this keeps happening, mention it to a healthcare professional."
+      ]
+    },
+    "notes": {
+      "outlier": [
+        "Reading {{readingNumber}} ({{sys}}/{{dia}}) was very different from your other two readings and was not used in the average. This can happen if you moved your arm, the cuff slipped, or there was a brief moment of stress during that test.",
+        "Reading {{readingNumber}} ({{sys}}/{{dia}}) stood apart from the other readings, so it was left out of the average.",
+        "The {{readingNumber}} reading looked like an outlier at {{sys}}/{{dia}}, so the result is based on the closer readings.",
+        "Reading {{readingNumber}} was much different from the others. Movement, cuff position, or stress may have affected it.",
+        "Because reading {{readingNumber}} did not match the pattern, it was excluded from the average.",
+        "The result ignored reading {{readingNumber}} ({{sys}}/{{dia}}) because it was too far from the other two.",
+        "Reading {{readingNumber}} may have been affected by a measurement issue, so it was not included in the final average.",
+        "Your other two readings were closer together, so reading {{readingNumber}} was treated as the outlier."
+      ],
+      "firstExcludedThree": [
+        "Your first reading ({{sys}}/{{dia}}) was higher than the ones that followed. This is a very common pattern — your body simply needed a moment to fully relax. The first reading was set aside and your result is based on readings 2 and 3.",
+        "The first reading ({{sys}}/{{dia}}) was higher than readings 2 and 3, so the average uses the later readings.",
+        "Your first test looked like a first-reading spike. The result is based on the calmer second and third readings.",
+        "Reading 1 was higher than the following readings, which often happens before the body settles. It was not used.",
+        "Because the later readings were lower and more consistent, the first reading was excluded from the average.",
+        "Your body may have needed a moment to relax. The first reading was set aside and readings 2 and 3 were used.",
+        "The first reading stood above the rest, so the final result uses the two readings that followed.",
+        "A higher first reading is common. This result uses readings 2 and 3 because they better matched each other."
+      ],
+      "firstExcludedTwo": [
+        "Your first reading ({{sys}}/{{dia}}) was higher than the second — a common first-test effect. Only the second reading was used.",
+        "The first reading ({{sys}}/{{dia}}) was higher than the next one, so the second reading was used for the result.",
+        "Reading 1 looked like a first-test spike. The final result is based on reading 2.",
+        "Your first measurement was higher, which can happen before you settle. The second reading was used.",
+        "Because the second reading was lower after a short rest, the first reading was not included.",
+        "The first reading may have caught your body before it relaxed. Only the second reading was used.",
+        "Reading 1 was set aside because it was higher than reading 2 in a common first-reading pattern.",
+        "The result uses the second reading because the first one was noticeably higher."
+      ]
+    },
+    "qualityLabels": {
+      "outlier": [
+        "One reading was very different and was not used",
+        "One reading stood apart and was excluded",
+        "An outlier reading was left out",
+        "The average ignored one unusual reading",
+        "One reading did not match the pattern",
+        "A very different reading was removed",
+        "One reading was treated as an outlier",
+        "The final result used the closer readings"
+      ],
+      "verySimilar": [
+        "Your readings were very similar — great result",
+        "Your readings matched closely",
+        "The readings were highly consistent",
+        "Your numbers stayed very steady",
+        "The set showed strong consistency",
+        "Your readings were closely aligned",
+        "The measurements agreed well",
+        "This was a very consistent set"
+      ],
+      "fairlySimilar": [
+        "Your readings were fairly similar",
+        "The readings were reasonably close",
+        "Your numbers were mostly consistent",
+        "The set was fairly steady",
+        "Your readings lined up well enough",
+        "The measurements were acceptably close",
+        "This was a reasonably consistent set",
+        "Your readings showed a stable pattern"
+      ],
+      "changedTooMuch": [
+        "Your readings changed too much — consider testing again",
+        "Your readings varied more than expected",
+        "The readings were too spread out",
+        "Your numbers shifted enough to lower confidence",
+        "The set was not as consistent as expected",
+        "A repeat test may give a clearer result",
+        "The readings moved around too much",
+        "The result would be clearer with another calm test"
+      ]
+    },
+    "ageNoteVariants": [
+      "These results are most reliable for adults and older teenagers. Home blood pressure monitors can be less accurate for children, during pregnancy, with an irregular heartbeat, or if the arm is much larger or smaller than average.",
+      "Home BP results are most useful for adults and older teens. Accuracy may be lower for children, pregnancy, irregular heartbeat, or unusual cuff fit.",
+      "This tool works best for adult-style home readings. Children, pregnancy, irregular rhythms, and cuff-size issues can make results less reliable.",
+      "Treat this as general guidance for adults and older teenagers. Some situations, including pregnancy or irregular heartbeat, need clinician interpretation.",
+      "Home monitors are not equally accurate for everyone. Pregnancy, childhood, irregular pulse, and poor cuff fit can affect the result.",
+      "This result is most dependable when the cuff fits well and the user is an adult or older teen. Special situations may need medical review.",
+      "If you are pregnant, under adult age, have an irregular heartbeat, or use a poorly fitting cuff, confirm readings with a healthcare professional.",
+      "Use extra caution interpreting this result if cuff fit, pregnancy, age, or heart rhythm may affect the monitor."
+    ]
+  }
+}

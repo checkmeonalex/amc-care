@@ -1,0 +1,243 @@
+.footer {
+  background: #f5f0eb;
+}
+
+/* ── Newsletter ── */
+.newsletter {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 3rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.newsletterIcon {
+  flex-shrink: 0;
+}
+
+.newsletterText h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 0.4rem;
+}
+
+.newsletterText p {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.55;
+  max-width: 420px;
+}
+
+.newsletterDisclaimer {
+  font-size: 0.75rem !important;
+  color: #888 !important;
+  margin-top: 0.5rem;
+}
+
+.newsletterForm {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.emailInput {
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  border: 1.5px solid #ddd;
+  font-size: 0.9rem;
+  outline: none;
+  background: #fff;
+  width: 240px;
+  transition: border-color 0.2s;
+}
+
+.emailInput:focus {
+  border-color: #1565c0;
+}
+
+.subscribeBtn {
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.subscribeBtn:hover {
+  background: #1565c0;
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid #e0d8d0;
+  margin: 0 4rem;
+}
+
+/* ── Link columns ── */
+.columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  padding: 3rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.col {}
+
+.colHeading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+.colLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.colLinks a {
+  font-size: 0.85rem;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.colLinks a:hover {
+  color: #111;
+}
+
+.loginBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #1565c0;
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 0.6rem 1.6rem;
+  border-radius: 999px;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s;
+}
+
+.loginBtn:hover {
+  background: #0d47a1;
+}
+
+.signupLink {
+  display: block;
+  font-size: 0.85rem;
+  color: #555;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.signupLink:hover {
+  color: #111;
+}
+
+/* ── Bottom bar ── */
+.bottom {
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 4rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.bottomLeft {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.bottomLeft span {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.bottomLeft a {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.bottomLeft a:hover {
+  color: #fff;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.socials a {
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.socials a:hover {
+  color: #fff;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .newsletter {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .newsletterForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .emailInput {
+    width: 100%;
+  }
+
+  .columns {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem 1.5rem;
+  }
+
+  .divider {
+    margin: 0 1.5rem;
+  }
+
+  .bottom {
+    padding: 1.2rem 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}

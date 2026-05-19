@@ -1,0 +1,700 @@
+.page {
+  min-height: 100vh;
+  padding-top: 68px;
+  display: flex;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  min-height: calc(100vh - 68px);
+}
+
+/* ── LEFT (dark, video side) ── */
+.left {
+  background: #111;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem;
+  gap: 1.8rem;
+  position: relative;
+}
+
+.stepDots {
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: background 0.3s;
+}
+
+.dotActive {
+  background: #fff;
+  width: 22px;
+  border-radius: 999px;
+}
+
+.dotDone {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Video placeholder */
+.videoWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.videoPlaceholder {
+  flex: 1;
+  min-height: 260px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.09);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.videoPlaceholder:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.playBtn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s;
+}
+
+.videoPlaceholder:hover .playBtn {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.videoLabel {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.02em;
+}
+
+/* BP machine display (step 3 only) */
+.machineDisplay {
+  background: #0d1f36;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1.4rem 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.machineReading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.machineReadingLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.machineReadingValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.machineReadingValue.dim {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.machineReadingUnit {
+  font-size: 0.62rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.machineDivider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+/* ── RIGHT (white, action side) ── */
+.right {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 4rem;
+}
+
+.stepBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #E53935;
+  margin-bottom: 1rem;
+}
+
+.stepBadge span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffebee;
+  text-align: center;
+  line-height: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #E53935;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d0d0d;
+  margin: 0 0 0.9rem;
+  line-height: 1.15;
+}
+
+.desc {
+  font-size: 0.97rem;
+  color: #666;
+  line-height: 1.75;
+  margin: 0 0 2.5rem;
+  max-width: 360px;
+}
+
+.nextBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.9rem 2rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  align-self: flex-start;
+}
+
+.nextBtn:hover {
+  background: #333;
+}
+
+/* ── Step 3: input section ── */
+.inputSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+/* Reading slots */
+.slots {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.slot {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: 10px;
+  border: 1.5px solid #f0f0f0;
+  background: #fafafa;
+  min-height: 50px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+.slotFilled {
+  border-color: #ffcdd2;
+  background: #fff8f8;
+}
+
+.slotNum {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #ccc;
+  min-width: 20px;
+}
+
+.slotFilled .slotNum {
+  color: #E53935;
+}
+
+.slotVals {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.slotVal {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111;
+}
+
+.slotVal em {
+  font-style: normal;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: #aaa;
+  margin-left: 2px;
+}
+
+.slotEmpty {
+  font-size: 0.82rem;
+  color: #d0d0d0;
+}
+
+/* Input form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formRow {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  position: relative;
+}
+
+.fieldLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #444;
+}
+
+.infoBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 3px;
+  color: #aaa;
+  cursor: pointer;
+  vertical-align: text-bottom;
+  line-height: 1;
+  position: relative;
+  top: -1px;
+  transition: color 0.15s;
+}
+.infoBtn:hover { color: #555; }
+
+.fieldInfoOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fieldInfoBox {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.4rem 1.5rem 1.1rem;
+  max-width: 320px;
+  width: calc(100% - 2rem);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.fieldInfoTitle {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #111;
+  margin: 0 0 0.55rem;
+}
+
+.fieldInfoText {
+  font-size: 0.92rem;
+  color: #444;
+  line-height: 1.55;
+  margin: 0 0 1rem;
+}
+
+.fieldInfoClose {
+  display: block;
+  width: 100%;
+  padding: 0.6rem;
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.fieldInfoClose:hover { background: #333; }
+
+.opt {
+  font-weight: 400;
+  color: #bbb;
+  font-size: 0.68rem;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.field input {
+  border: 1.5px solid #ebebeb;
+  border-radius: 10px;
+  padding: 0.72rem 2.6rem 0.72rem 0.85rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #111;
+  background: #fafafa;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-appearance: textfield;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.field input::-webkit-inner-spin-button,
+.field input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.field input:focus {
+  border-color: #E53935;
+  background: #fff;
+}
+
+.fieldUnit {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.78rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #c0c0c0;
+  pointer-events: none;
+}
+
+.addBtn {
+  background: #111;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.9rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  text-align: center;
+}
+
+/* ── Validation popup ── */
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(10, 10, 15, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.popup {
+  background: #fff;
+  border-radius: 22px;
+  padding: 2rem 2rem 1.8rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 32px 80px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(0,0,0,0.06);
+  animation: popupIn 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+@keyframes popupIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.popupIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.popupError .popupIcon {
+  background: #fff0f0;
+  color: #C62828;
+}
+
+.popupWarning .popupIcon {
+  background: #fff8f0;
+  color: #E65100;
+}
+
+.popupClose {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  transition: background 0.2s, color 0.2s;
+}
+
+.popupClose:hover {
+  background: #eee;
+  color: #111;
+}
+
+.popupBody {
+  margin-bottom: 1.6rem;
+}
+
+.popupTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.02em;
+  padding-right: 2rem;
+}
+
+.popupError .popupTitle { color: #B71C1C; }
+.popupWarning .popupTitle { color: #BF360C; }
+
+.popupMessage {
+  font-size: 0.88rem;
+  color: #666;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.popupActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.popupContinue {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: none;
+  background: #E65100;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.popupContinue:hover { background: #BF360C; }
+
+.popupRetry {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 12px;
+  border: 1.5px solid #eee;
+  background: transparent;
+  color: #555;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.popupRetry:hover {
+  background: #fafafa;
+  border-color: #ddd;
+}
+
+.popupHelp {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: #999;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(153, 153, 153, 0.4);
+  transition: color 0.2s, text-decoration-color 0.2s;
+}
+
+.popupHelp:hover {
+  color: #555;
+  text-decoration-color: rgba(85, 85, 85, 0.5);
+}
+
+.addBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.addBtn:not(:disabled):hover {
+  background: #333;
+}
+
+.reviewBtn {
+  background: #E53935;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.reviewBtn:hover {
+  background: #c62828;
+}
+
+/* Smart CTA — single morphing button */
+.smartCta {
+  background: #E53935;
+  opacity: 0.28;
+  transition: background 0.3s ease, opacity 0.3s ease;
+  cursor: not-allowed;
+}
+
+.smartCta:not(:disabled) {
+  background: #111;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.smartCta:not(:disabled):hover {
+  background: #2a2a2a;
+}
+
+.smartCta.ctaReady {
+  background: #E53935;
+  opacity: 1;
+}
+
+.smartCta.ctaReady:hover {
+  background: #c62828;
+}
+
+/* ── Mobile ── */
+@media (max-width: 768px) {
+  .split {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .left {
+    padding: 1.8rem 1.4rem;
+    min-height: 280px;
+  }
+
+  .videoPlaceholder {
+    min-height: 180px;
+  }
+
+  .right {
+    padding: 2rem 1.4rem;
+    justify-content: flex-start;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .formRow {
+    flex-wrap: wrap;
+  }
+
+  .field {
+    min-width: calc(50% - 0.45rem);
+  }
+
+  .machineDisplay {
+    padding: 1rem 1.2rem;
+  }
+
+  .machineReadingValue {
+    font-size: 1.5rem;
+  }
+
+  .machineReadingValue.dim {
+    font-size: 1.1rem;
+  }
+}
