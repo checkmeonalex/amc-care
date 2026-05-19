@@ -72,14 +72,12 @@ type OcrResult = { rawText: string; tableText: string };
 async function ocrRows(rowPaths: string[], pageWidth: number): Promise<OcrResult> {
   if (rowPaths.length === 0) return { rawText: "", tableText: "" };
 
-  console.log(`[OCR] 4. starting Tesseract worker for ${rowPaths.length} rows`);
   const worker = await makeWorker();
   const rawLines:   string[] = [];
   const tableParts: string[] = [];
 
   try {
     for (let i = 0; i < rowPaths.length; i++) {
-      console.log(`[OCR] 4.${i + 1} OCR row ${i + 1}/${rowPaths.length}`);
       const { data } = await worker.recognize(rowPaths[i], {}, { text: true, blocks: true });
 
       // Run structural reconstruction on this row's word data.
@@ -94,7 +92,6 @@ async function ocrRows(rowPaths: string[], pageWidth: number): Promise<OcrResult
     await worker.terminate();
   }
 
-  console.log(`[OCR] 4. row OCR complete — ${rawLines.length} non-empty rows`);
   return {
     rawText:   rawLines.join("\n"),
     tableText: tableParts.join("\n"),
@@ -104,13 +101,11 @@ async function ocrRows(rowPaths: string[], pageWidth: number): Promise<OcrResult
 // ── Full-page OCR fallback ────────────────────────────────────────────────────
 
 async function ocrFullPage(imagePath: string, pageWidth: number): Promise<OcrResult> {
-  console.log("[OCR] 4. starting full-page OCR (no regions detected)");
   const worker = await makeWorker();
 
   try {
     const { data } = await worker.recognize(imagePath, {}, { text: true, blocks: true });
     const doc = reconstruct(data, pageWidth);
-    console.log("[OCR] 4. full-page OCR complete");
     return { rawText: doc.plainText, tableText: doc.tableText };
   } finally {
     await worker.terminate();
@@ -124,20 +119,11 @@ export async function runImagePipeline(
   ensureTessdata: () => Promise<void>
 ): Promise<OcrPipelineResult> {
 
-  console.log("[OCR] 1. image received:", filePath);
-
   // ── 1. Quality Detection ───────────────────────────────────────────────────
   const quality = await detectQuality(filePath);
-  console.log(
-    `[OCR] 2. quality detected — score: ${quality.score}` +
-    (quality.blurry      ? " | BLURRY"       : "") +
-    (quality.dark        ? " | DARK"         : "") +
-    (quality.lowContrast ? " | LOW-CONTRAST" : "")
-  );
 
   // ── 2. Preprocessing ──────────────────────────────────────────────────────
   const preprocessedPath = await preprocessImage(filePath, quality);
-  console.log("[OCR] 3. preprocessing done →", preprocessedPath);
 
   // Read image width so reconstruct() can compute relative column gaps
   const { default: sharp } = await import("sharp");
@@ -150,19 +136,11 @@ export async function runImagePipeline(
 
   try {
     // ── 3. Tessdata check ─────────────────────────────────────────────────
-    console.log("[OCR] 3a. checking tessdata…");
     await ensureTessdata();
-    console.log("[OCR] 3a. tessdata ready");
 
     // ── 3b. Region Detection ──────────────────────────────────────────────
-    console.log("[OCR] 3b. detecting row regions…");
     const detection = await detectAndCropRows(preprocessedPath);
     regionMethod    = detection.method;
-    console.log(
-      `[OCR] 3b. region detection done — method: ${detection.method}` +
-      `, rows: ${detection.regions.length}` +
-      `, crops: ${detection.rowPaths.length}`
-    );
 
     // Only use region-based OCR when rows are meaningful:
     //   • at least 2 crops
@@ -177,12 +155,6 @@ export async function runImagePipeline(
                    && detection.rowPaths.length <= 40
                    && avgRowH >= 28
                    && avgRowH <= 120;
-
-    console.log(
-      `[OCR] 3c. row check — count: ${detection.rowPaths.length}` +
-      `, avgH: ${Math.round(avgRowH)}px` +
-      `, useRowOcr: ${useRowOcr}`
-    );
 
     try {
       const result = useRowOcr
@@ -199,28 +171,15 @@ export async function runImagePipeline(
   }
 
   // ── 5. AI Cleanup (SymSpell + Fuse.js) ────────────────────────────────────
-  console.log("[OCR] 5. running AI cleanup (SymSpell + Fuse.js)…");
   // Combine tableText (structured, tab-separated) + rawText (full coverage).
-  // tableText alone often only contains the patient-info section when the
-  // line detector found section separators instead of individual data rows.
   const combined = [tableText, rawText].filter(Boolean).join("\n");
   const cleanText = cleanupText(combined || tableText || rawText);
-  console.log("[OCR] 5. cleanup done");
 
-  // ── 6. Medical Parser — feeds on structured tableText ─────────────────────
-  console.log("[OCR] 6. parsing medical values…");
+  // ── 6. Medical Parser ─────────────────────────────────────────────────────
   const labValues = parseLabValues(cleanText);
-  console.log(`[OCR] 6. parser found ${labValues.length} lab values`);
 
   // ── 7. Validation Engine ──────────────────────────────────────────────────
-  console.log("[OCR] 7. validating against reference ranges…");
   const validation = validate(labValues);
-  console.log(
-    `[OCR] 7. validation done — confidence: ${validation.confidence}%` +
-    `, flagged: ${validation.flagged.length}` +
-    `, criticals: ${validation.criticals.length}`
-  );
 
-  console.log("[OCR] ✓ pipeline complete");
   return { rawText, tableText, cleanText, quality, validation, regionMethod };
 }

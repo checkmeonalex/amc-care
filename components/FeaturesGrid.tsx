@@ -1,14 +1,15 @@
+import Link from "next/link";
 import { Activity, ClipboardList, FlaskConical, HeartPulse, MapPin, Stethoscope, Video } from "lucide-react";
 import styles from "./FeaturesGrid.module.css";
 
 const features = [
-  { label: "Monitor blood pressure", Icon: HeartPulse,   bg: "#FFEBEE", color: "#E53935", href: "/blood-pressure" },
-  { label: "Check your symptoms",    Icon: Stethoscope,  bg: "#FFF3E0", color: "#F57C00", href: "#" },
-  { label: "Analyze your labs",      Icon: FlaskConical, bg: "#E8F5E9", color: "#388E3C", href: "/lab-results" },
-  { label: "Track your health",      Icon: Activity,     bg: "#FCE4EC", color: "#C2185B", href: "#" },
-  { label: "Store medical records",  Icon: ClipboardList,bg: "#E3F2FD", color: "#1565C0", href: "#" },
-  { label: "Find hospitals nearby",  Icon: MapPin,       bg: "#F3E5F5", color: "#7B1FA2", href: "#" },
-  { label: "Talk to a live doctor",  Icon: Video,        bg: "#E0F7FA", color: "#00838F", href: "#" },
+  { label: "Monitor blood pressure", Icon: HeartPulse,    bg: "#FFEBEE", color: "#E53935", href: "/blood-pressure",                          soon: false },
+  { label: "Check your symptoms",    Icon: Stethoscope,   bg: "#FFF3E0", color: "#F57C00", href: "/coming-soon?feature=symptom-checker",     soon: true  },
+  { label: "Analyze your labs",      Icon: FlaskConical,  bg: "#E8F5E9", color: "#388E3C", href: "/lab-results",                             soon: false },
+  { label: "Track your health",      Icon: Activity,      bg: "#FCE4EC", color: "#C2185B", href: "/coming-soon?feature=health-tracking",     soon: true  },
+  { label: "Store medical records",  Icon: ClipboardList, bg: "#E3F2FD", color: "#1565C0", href: "/coming-soon?feature=medical-records",     soon: true  },
+  { label: "Find hospitals nearby",  Icon: MapPin,        bg: "#F3E5F5", color: "#7B1FA2", href: "/coming-soon?feature=find-hospitals",      soon: true  },
+  { label: "Talk to a live doctor",  Icon: Video,         bg: "#E0F7FA", color: "#00838F", href: "/coming-soon?feature=talk-to-a-doctor",   soon: true  },
 ];
 
 export default function FeaturesGrid() {
@@ -19,7 +20,8 @@ export default function FeaturesGrid() {
       </h2>
       <div className={styles.grid}>
         {features.map((f) => (
-          <a key={f.label} href={f.href} className={styles.item}>
+          <Link key={f.label} href={f.href} className={styles.item}>
+            {f.soon && <span className={styles.comingSoonTag}>Coming Soon</span>}
             <span className={styles.label}>{f.label}</span>
             <span className={styles.right}>
               <span className={styles.iconWrap} style={{ background: f.bg }}>
@@ -27,7 +29,7 @@ export default function FeaturesGrid() {
               </span>
               <span className={styles.arrow}>›</span>
             </span>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

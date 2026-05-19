@@ -252,10 +252,7 @@ export function reconstruct(
   page:      TesseractPage,
   pageWidth: number
 ): StructuredDocument {
-  console.log("[OCR] ★ reconstruct: extracting words…");
-
   const words = extractWords(page);
-  console.log(`[OCR] ★ reconstruct: ${words.length} words extracted`);
 
   if (words.length === 0) {
     return { blocks: [], tableText: "", plainText: "" };
@@ -263,11 +260,9 @@ export function reconstruct(
 
   // Step 2 — row clustering
   const rows = clusterIntoRows(words);
-  console.log(`[OCR] ★ reconstruct: ${rows.length} rows clustered`);
 
   // Step 3 — block grouping
   const rawBlocks = groupIntoBlocks(rows);
-  console.log(`[OCR] ★ reconstruct: ${rawBlocks.length} blocks detected`);
 
   // Step 4 + 5 — classify and align columns
   const blocks: DocumentBlock[] = [];
@@ -280,9 +275,7 @@ export function reconstruct(
     const colCount  = colBounds.length + 1;
 
     const structured = rawBlock.map(row => buildStructuredRow(row, colBounds));
-
     blocks.push({ type, rows: structured, columnCount: colCount });
-    console.log(`[OCR] ★ block [${type}] — ${rawBlock.length} rows, ${colCount} col(s)`);
   }
 
   // Emit outputs

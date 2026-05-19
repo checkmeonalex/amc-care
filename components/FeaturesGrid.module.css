@@ -24,6 +24,7 @@
 }
 
 .item {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -34,6 +35,22 @@
   background: #fff;
   transition: border-color 0.2s, box-shadow 0.2s;
   cursor: pointer;
+}
+
+.comingSoonTag {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5046e4;
+  background: #ede9fe;
+  border-radius: 0 10px 0 8px;
+  padding: 3px 8px;
+  line-height: 1.5;
+  pointer-events: none;
 }
 
 .item:hover {

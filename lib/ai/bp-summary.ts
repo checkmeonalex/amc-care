@@ -78,10 +78,6 @@ Write the summary.`;
     },
   ];
 
-  // TODO: remove before shipping
-  console.log("[bp-summary] system prompt:\n", SYSTEM_PROMPT);
-  console.log("[bp-summary] user prompt:\n", userPrompt);
-
   const raw = await runCFModel(MODEL, messages, {
     max_tokens: 200,
   });

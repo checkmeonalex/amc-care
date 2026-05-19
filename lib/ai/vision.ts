@@ -24,16 +24,14 @@ export type VisionResult = {
 
 // ── Prompt ────────────────────────────────────────────────────────────────────
 
-const PROMPT = `You are a medical lab report reader. Carefully read every part of this lab report image.
+const PROMPT = `Extract lab results. Output only:
+PATIENT: Name|Date|Age|Sex
+SECTION_NAME
+TestName|Value|Unit|RefLow-RefHigh|H/L/C/N
+...
+REMARKS: text if any
 
-Write an organized plain-text summary of ALL the results you can see.
-- Start with patient info (name, ID, date, age, sex) if visible.
-- Group tests under their section headers (e.g. HAEMATOLOGY, BIOCHEMISTRY, URINE).
-- For each test write one line: TestName: Value Unit (RefLow - RefHigh) [H or L if abnormal]
-- If a value is flagged as critical, add [CRITICAL].
-- Include any remarks or clinical notes at the end under "Remarks:".
-
-Use plain text only. No JSON. No markdown. No extra commentary.`;
+H=high L=low C=critical N=normal. No prose. No extra text.`;
 
 // ── Proxy helper ──────────────────────────────────────────────────────────────
 
@@ -87,10 +85,7 @@ export async function runVisionAnalysis(imagePath: string): Promise<VisionResult
   const ext     = imagePath.toLowerCase().endsWith(".png") ? "png" : "jpeg";
   const dataUrl = `data:image/${ext};base64,${base64}`;
 
-  console.log(`[Vision] sending image to ${VISION_MODEL} (${buf.length} bytes)`);
-
   // Step 1 — accept the model license (prompt field, not messages)
-  console.log("[Vision] sending license agreement…");
   await cfPost(url, token, dispatcher, { prompt: "agree" }).catch(() => {});
 
   // Step 2 — send the vision request
@@ -108,7 +103,5 @@ export async function runVisionAnalysis(imagePath: string): Promise<VisionResult
   });
 
   const text = data.result?.response?.trim() ?? "";
-  console.log(`[Vision] response: ${text.length} chars`);
-
   return { text, model: VISION_MODEL };
 }

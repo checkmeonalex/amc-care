@@ -100,7 +100,7 @@ export default async function handler(
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const form = formidable({ maxFileSize: 20 * 1024 * 1024, keepExtensions: true });
+  const form = formidable({ maxFileSize: 10 * 1024 * 1024, keepExtensions: true });
 
   let files: formidable.Files;
   try {
@@ -131,36 +131,34 @@ export default async function handler(
     } else if (ext === ".docx") {
       rawText = text = clean(await fromDocx(uploaded.filepath));
     } else {
-      // ── OCR pipeline ────────────────────────────────────────────────────────
-      const result = await runImagePipeline(uploaded.filepath, ensureEnglishTessdata);
-      rawText    = clean(result.rawText);
-      tableText  = clean(result.tableText);
-      text       = clean(result.cleanText);
-      quality    = result.quality;
-      validation = result.validation;
+      // ── Vision first (up to 3 attempts), OCR only if all fail ───────────────
+      if (process.env.CF_ACCOUNT_ID && process.env.CF_AI_TOKEN) {
+        const MAX_ATTEMPTS = 3;
+        let lastVisionErr: unknown;
 
-      // ── Hybrid: vision fallback ──────────────────────────────────────────────
-      // Trigger when OCR is uncertain OR the image has a detected table layout.
-      const ocrConfidence = validation?.confidence ?? 0;
-      const hasTableLayout = result.regionMethod === "lines";
-      const needsVision    = ocrConfidence < 70 || hasTableLayout;
-
-      console.log(
-        `[Hybrid] confidence: ${ocrConfidence}%` +
-        `, tableLayout: ${hasTableLayout}` +
-        `, useVision: ${needsVision}`
-      );
-
-      if (needsVision && process.env.CF_ACCOUNT_ID && process.env.CF_AI_TOKEN) {
-        try {
-          console.log("[Hybrid] sending to vision model…");
-          vision     = await runVisionAnalysis(uploaded.filepath);
-          visionUsed = true;
-          console.log("[Hybrid] vision complete");
-        } catch (vErr) {
-          console.error("[Hybrid] vision failed:", vErr instanceof Error ? vErr.message : vErr);
-          // Non-fatal — OCR result still returned
+        for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+          try {
+            vision     = await runVisionAnalysis(uploaded.filepath);
+            visionUsed = true;
+            break;
+          } catch (err) {
+            lastVisionErr = err;
+          }
         }
+
+        if (!visionUsed) {
+          console.error("[lab/extract] vision failed, falling back to OCR:", lastVisionErr instanceof Error ? lastVisionErr.message : lastVisionErr);
+        }
+      }
+
+      // ── OCR fallback — only runs when vision failed or creds are missing ─────
+      if (!visionUsed) {
+        const result = await runImagePipeline(uploaded.filepath, ensureEnglishTessdata);
+        rawText    = clean(result.rawText);
+        tableText  = clean(result.tableText);
+        text       = clean(result.cleanText);
+        quality    = result.quality;
+        validation = result.validation;
       }
     }
 
@@ -180,8 +178,7 @@ export default async function handler(
       visionUsed,
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : "Extraction failed";
-    console.error("[lab/extract]", message);
-    return res.status(500).json({ error: message });
+    console.error("[lab/extract]", err instanceof Error ? err.message : err);
+    return res.status(500).json({ error: "Failed to process file. Please try again." });
   }
 }

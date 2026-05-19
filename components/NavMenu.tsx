@@ -65,31 +65,46 @@ export default function NavMenu({ open, onClose }: Props) {
         <nav className={styles.navContent}>
           <p className={styles.sectionLabel}>Features</p>
           <ul className={styles.primaryLinks}>
-            <li><a href="#">Symptom checker</a></li>
+            <li>
+              <Link href="/coming-soon?feature=symptom-checker">Symptom checker</Link>
+              <span className={styles.comingSoonTag}>Coming Soon</span>
+            </li>
             <li><Link href="/lab-results">Lab result analysis</Link></li>
             <li><Link href="/blood-pressure">Monitor blood pressure</Link></li>
-            <li><a href="#">Health tracking</a></li>
-            <li><a href="#">Medical records</a></li>
-            <li><a href="#">Find hospitals</a></li>
-            <li><a href="#">Talk to a doctor</a></li>
+            <li>
+              <Link href="/coming-soon?feature=health-tracking">Health tracking</Link>
+              <span className={styles.comingSoonTag}>Coming Soon</span>
+            </li>
+            <li>
+              <Link href="/coming-soon?feature=medical-records">Medical records</Link>
+              <span className={styles.comingSoonTag}>Coming Soon</span>
+            </li>
+            <li>
+              <Link href="/coming-soon?feature=find-hospitals">Find hospitals</Link>
+              <span className={styles.comingSoonTag}>Coming Soon</span>
+            </li>
+            <li>
+              <Link href="/coming-soon?feature=talk-to-a-doctor">Talk to a doctor</Link>
+              <span className={styles.comingSoonTag}>Coming Soon</span>
+            </li>
           </ul>
 
           <div className={styles.secondaryGrid}>
             <div>
               <p className={styles.sectionLabel}>Support</p>
               <ul className={styles.secondaryLinks}>
-                <li><a href="#">How it works</a></li>
-                <li><a href="#">FAQs</a></li>
-                <li><a href="#">Reviews</a></li>
+                <li><Link href="/coming-soon">How it works</Link></li>
+                <li><Link href="/coming-soon">FAQs</Link></li>
+                <li><Link href="/coming-soon">Reviews</Link></li>
               </ul>
             </div>
             <div>
               <p className={styles.sectionLabel}>Company</p>
               <ul className={styles.secondaryLinks}>
-                <li><a href="#">About us</a></li>
-                <li><a href="#">For hospitals</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><Link href="/coming-soon">About us</Link></li>
+                <li><Link href="/coming-soon">For hospitals</Link></li>
+                <li><Link href="/coming-soon">Careers</Link></li>
+                <li><Link href="/coming-soon">Contact</Link></li>
               </ul>
             </div>
           </div>

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import styles from "./Header.module.css";
 import Logo from "./Logo";
 import NavMenu from "./NavMenu";
@@ -40,14 +42,20 @@ function GridIcon({ open, dark }: { open: boolean; dark: boolean }) {
 export default function Header() {
   const [atTop, setAtTop] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    const onScroll = () => {
-      setAtTop(window.scrollY < 10);
-    };
+    const onScroll = () => setAtTop(window.scrollY < 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close sidebar on every route change
+  useEffect(() => {
+    const close = () => setMenuOpen(false);
+    router.events.on("routeChangeStart", close);
+    return () => router.events.off("routeChangeStart", close);
+  }, [router.events]);
 
   const cls = [
     styles.header,
@@ -63,7 +71,7 @@ export default function Header() {
           <a href="#">FAQs</a>
         </nav>
 
-        <div className={styles.brand}><Logo dark={!atTop} /></div>
+        <Link href="/" className={styles.brand}><Logo dark={!atTop} /></Link>
 
         <div className={styles.right}>
           <a href="#" className={styles.login}>Log in</a>

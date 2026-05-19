@@ -5,6 +5,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   background: #f5f4f1;
+  overflow-x: hidden;
 }
 
 /* ── Left — scanner panel ── */
@@ -15,17 +16,471 @@
   flex-direction: column;
   height: calc(100vh - 68px);
   overflow: hidden;
+  min-width: 0;
 }
 
 /* ── Right — medical results panel ── */
 .right {
-  background: #fff;
+  background: #f2f2f7;
   display: flex;
   flex-direction: column;
   height: calc(100vh - 68px);
   overflow: hidden;
   padding: 0;
   gap: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+  min-width: 0;
+  position: relative; /* contains the desktop chat overlay */
+}
+
+/* ── AI Explanation panel ── */
+.explainPanel {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Tab bar — frosted glass ── */
+.tabBar {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 16px 18px 14px;
+  flex-shrink: 0;
+  background: rgba(242, 242, 247, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(60, 60, 67, 0.1);
+}
+
+.tabSegment {
+  display: flex;
+  align-items: center;
+  background: rgba(118, 118, 128, 0.14);
+  border-radius: 11px;
+  padding: 3px;
+  gap: 1px;
+  flex-shrink: 0;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3c3c43;
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: background 0.22s cubic-bezier(0.4,0,0.2,1),
+              color 0.22s,
+              box-shadow 0.22s;
+  white-space: nowrap;
+  letter-spacing: -0.015em;
+}
+
+.tabActive {
+  background: #ffffff;
+  color: #000000;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.13), 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.explainMeta {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.explainModel {
+  font-size: 11px;
+  font-weight: 500;
+  color: #8e8e93;
+  background: rgba(118, 118, 128, 0.1);
+  padding: 3px 10px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  letter-spacing: -0.01em;
+}
+
+.explainTyping {
+  font-size: 11px;
+  font-weight: 600;
+  color: #af52de;
+  letter-spacing: -0.01em;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ── Attention dot ── */
+.attentionDot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3b30;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.5);
+  animation: beam 1.5s ease-out infinite;
+}
+
+@keyframes beam {
+  0%   { box-shadow: 0 0 0 0   rgba(255, 59, 48, 0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(255, 59, 48, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(255, 59, 48, 0);   }
+}
+
+/* ── Content body ── */
+.explainBody {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Card entry animation ── */
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* ── Typing bubble — centered in the block ── */
+.typingBubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: #e9e9eb;
+  border-radius: 18px;
+  padding: 12px 20px;
+  margin: 4px auto;
+  width: fit-content;
+  align-self: center;
+}
+
+.typingDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #8e8e93;
+  animation: typingBounce 1.2s ease-in-out infinite;
+}
+.typingDot:nth-child(2) { animation-delay: 0.18s; }
+.typingDot:nth-child(3) { animation-delay: 0.36s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0);    opacity: 0.4; }
+  30%            { transform: translateY(-5px); opacity: 1;   }
+}
+
+/* ── Loading state ── */
+.explainLoading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8e8e93;
+  padding: 40px 20px;
+  letter-spacing: -0.015em;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Error state ── */
+.explainError {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #ff3b30;
+  padding: 24px 20px;
+  letter-spacing: -0.01em;
+}
+
+/* ══════════════════════════════════════════
+   SUMMARY TAB — Apple Health-style card
+══════════════════════════════════════════ */
+
+.summaryCard {
+  background: linear-gradient(160deg, #dce8ff 0%, #e8f0ff 60%, #eaf4ff 100%);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+  animation: cardIn 0.45s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+  overflow: hidden;
+}
+
+.summaryHeader {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 18px 18px 10px;
+}
+
+.summaryHeaderIcon {
+  width: 30px;
+  height: 30px;
+  background: rgba(255,255,255,0.55);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3a6bdf;
+  flex-shrink: 0;
+  backdrop-filter: blur(8px);
+}
+
+.summaryTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1a3a6b;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.summaryDate {
+  font-size: 11px;
+  color: #5a7ab5;
+  margin: 2px 0 0;
+  letter-spacing: -0.01em;
+}
+
+/* Summary skeleton — shown while Groq is loading */
+.summarySkeleton {
+  padding: 4px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summarySkeletonBar {
+  height: 13px;
+  border-radius: 7px;
+  background: linear-gradient(
+    90deg,
+    rgba(58, 107, 223, 0.12) 25%,
+    rgba(58, 107, 223, 0.22) 50%,
+    rgba(58, 107, 223, 0.12) 75%
+  );
+  background-size: 1400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+.summaryContent {
+  padding: 4px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* First paragraph — slightly larger, bolder */
+.summaryOverviewFirst {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #1a2c4e;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Body paragraphs */
+.summaryOverview {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #243860;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Insight — italic, separated */
+.summaryInsight {
+  font-size: 13px;
+  line-height: 1.65;
+  color: #3a5a8a;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  font-style: italic;
+  margin: 4px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(58, 107, 223, 0.15);
+}
+
+.summaryActions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px 16px;
+  border-top: 1px solid rgba(60, 60, 67, 0.1);
+  background: rgba(242, 242, 247, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  flex-shrink: 0;
+}
+
+.summaryActionBtn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3a6bdf;
+  backdrop-filter: blur(8px);
+  transition: background 0.18s;
+  flex-shrink: 0;
+}
+
+.summaryActionBtn:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.summaryAskBtn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.65);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2a5abf;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  letter-spacing: -0.01em;
+  transition: background 0.18s;
+  white-space: nowrap;
+}
+
+.summaryAskBtn:hover {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+/* ── Attention tab header ── */
+.attentionHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #8e8e93;
+  padding: 0 2px 10px;
+}
+
+/* ══════════════════════════════════════════
+   ATTENTION TAB — section + row cards
+══════════════════════════════════════════ */
+
+/* Section grouped card */
+.expSection {
+  background: #ffffff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.03),
+    0 4px 14px rgba(0,0,0,0.06);
+  animation: cardIn 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  min-width: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.expSectionLabel {
+  padding: 12px 18px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #8e8e93;
+  margin: 0;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.09);
+}
+
+.expSection .expAbnormal,
+.expSection .expCritical {
+  border-radius: 0;
+  box-shadow: none;
+  animation: none;
+  border-bottom: 1px solid rgba(60, 60, 67, 0.07);
+  margin: 0;
+  background: #ffffff;
+  padding: 13px 18px;
+}
+
+.expSection .expAbnormal:last-child,
+.expSection .expCritical:last-child {
+  border-bottom: none;
+}
+
+/* Standalone abnormal card */
+.expAbnormal {
+  background: #ffffff;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.58;
+  color: #3c3c43;
+  letter-spacing: -0.015em;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.03),
+    0 4px 14px rgba(0,0,0,0.06);
+  animation: cardIn 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.expAbnormal strong {
+  color: #ff9500;
+  font-weight: 700;
+}
+
+/* Standalone critical card */
+.expCritical {
+  background: #ffffff;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  line-height: 1.58;
+  color: #3c3c43;
+  letter-spacing: -0.015em;
+  border-radius: 16px;
+  box-shadow:
+    0 1px 1px rgba(0,0,0,0.03),
+    0 4px 14px rgba(0,0,0,0.06);
+  animation: cardIn 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.expCritical strong {
+  color: #ff3b30;
+  font-weight: 700;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.38; }
 }
 
 /* ── Panel header ── */
@@ -545,6 +1000,103 @@
 }
 .retryBtn:hover { background: #7f1d1d; }
 
+/* ══════════════════════════════════════════
+   EXTRACTING — animated document illustration
+══════════════════════════════════════════ */
+
+.extractingRight {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Document card */
+.extractDoc {
+  position: relative;
+  width: 140px;
+  background: #eef0f8;
+  border-radius: 16px;
+  padding: 22px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  animation: docBreathe 2.8s ease-in-out infinite;
+  box-shadow: 0 8px 32px rgba(80, 70, 228, 0.10);
+}
+
+@keyframes docBreathe {
+  0%, 100% { transform: translateY(0) scale(1);      box-shadow: 0 8px 32px rgba(80,70,228,0.10); }
+  50%       { transform: translateY(-4px) scale(1.01); box-shadow: 0 16px 40px rgba(80,70,228,0.16); }
+}
+
+/* Lines container */
+.extractDocLines {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.extractDocLinePair {
+  display: flex;
+  gap: 8px;
+}
+
+/* Individual line */
+.extractDocLine {
+  height: 9px;
+  border-radius: 5px;
+  background: #5046e4;
+  opacity: 0.25;
+  flex-shrink: 0;
+  animation: lineRead 1.8s ease-in-out infinite;
+}
+
+/* Stagger is applied via inline animationDelay on each line */
+
+@keyframes lineRead {
+  0%, 100% { opacity: 0.18; }
+  40%       { opacity: 0.85; }
+  70%       { opacity: 0.45; }
+}
+
+/* Blue accent bar at bottom of doc */
+.extractDocAccent {
+  height: 4px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #5046e4, #818cf8);
+  margin-top: 14px;
+  animation: accentPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes accentPulse {
+  0%, 100% { opacity: 0.6; transform: scaleX(0.85); }
+  50%       { opacity: 1;   transform: scaleX(1);    }
+}
+
+.extractingTitle {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  max-width: 220px;
+}
+
+.extractingSubtitle {
+  font-size: 13px;
+  color: #aaa;
+  font-weight: 400;
+  line-height: 1.5;
+  max-width: 200px;
+  margin-top: -8px;
+}
+
 /* ── RIGHT PANEL — Medical results ── */
 
 /* Empty / idle state */
@@ -971,15 +1523,106 @@
   padding: 0.13rem 0.5rem;
 }
 
+/* ── Scan content wrapper — transparent on desktop ── */
+.scanContent {
+  display: contents;
+}
+
+/* ── Collapsed bar — hidden on desktop ── */
+.scanBar {
+  display: none;
+}
+
 /* ── Mobile ── */
 @media (max-width: 960px) {
   .page { grid-template-columns: 1fr; }
+
+  /* Collapsed bar visible on mobile */
+  .scanBar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+
+  .scanBarToggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #f2f2f7;
+    border: none;
+    border-radius: 999px;
+    padding: 7px 14px 7px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c1c1e;
+    cursor: pointer;
+    letter-spacing: -0.01em;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .scanBarToggle span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .scanBarActions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .scanBarBtn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #f2f2f7;
+    border: none;
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #3c3c43;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* On mobile scanContent is a real block so it can animate */
+  .scanContent {
+    display: block;
+    overflow: hidden;
+    max-height: 680px;
+    opacity: 1;
+    transition:
+      max-height 0.34s cubic-bezier(0.55, 0, 0.45, 1),
+      opacity    0.22s ease;
+  }
+
+  /* Collapsed: slide up + fade out */
+  .leftCollapsed .scanContent {
+    max-height: 0;
+    opacity: 0;
+  }
+
+  .leftCollapsed {
+    height: auto !important;
+    overflow: visible !important;
+    flex-shrink: 0;
+  }
 
   /* On mobile the left panel scrolls naturally */
   .left {
     border-right: none;
     height: auto;
     overflow: visible;
+    min-width: 0;
+    width: 100%;
   }
 
   .scanFrameWrapper {
@@ -987,12 +1630,33 @@
     height: 55vw;
     min-height: 240px;
     padding: 8px;
+    overflow: hidden;
   }
 
   .right {
     border-top: 1px solid #e8e8e8;
+    height: auto;
     min-height: auto;
-    padding: 1.2rem;
+    overflow: visible;
+    padding: 5px;
+    min-width: 0;
+    width: 100%;
+    position: static; /* don't trap the mobile fixed overlay */
+  }
+
+  .explainPanel {
+    overflow: visible;
+    height: auto;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .explainBody {
+    overflow: visible;
+    height: auto;
+    padding: 8px 5px 24px;
+    min-width: 0;
+    width: 100%;
   }
 
   .panelHeader { padding: 1.2rem 1rem 0.7rem; }

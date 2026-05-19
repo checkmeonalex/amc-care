@@ -28,11 +28,6 @@ export async function preprocessImage(filePath: string, quality: QualityFlags): 
     `amc-care-pre-${Date.now()}-${Math.random().toString(36).slice(2)}.png`
   );
 
-  console.log(
-    `[OCR] 3. zoom: ${origWidth}px → ${target ?? origWidth}px` +
-    ` (${target ? Math.round((target / origWidth) * 10) / 10 : 1}x)`
-  );
-
   let pipeline = sharp(filePath)
     .rotate()      // correct EXIF orientation first
     .grayscale();
@@ -51,7 +46,6 @@ export async function preprocessImage(filePath: string, quality: QualityFlags): 
   // Only applied when the image is already soft — don't blur a crisp scan.
   if (quality.blurry || quality.score < 45) {
     pipeline = pipeline.blur(0.5);
-    console.log("[OCR] 3. denoise applied (blurry source)");
   }
 
   // ── Contrast boost ────────────────────────────────────────────────────────────
@@ -62,7 +56,6 @@ export async function preprocessImage(filePath: string, quality: QualityFlags): 
   if (quality.dark) {
     // Gamma < 1 brightens midtones without clipping highlights
     pipeline = pipeline.gamma(0.75);
-    console.log("[OCR] 3. gamma lift applied (dark source)");
   }
 
   // ── Sharpening ────────────────────────────────────────────────────────────────
@@ -80,7 +73,6 @@ export async function preprocessImage(filePath: string, quality: QualityFlags): 
   // and wipes colored values (red/orange abnormal markers).
   if ((quality.lowContrast || quality.dark) && quality.score < 35) {
     pipeline = pipeline.threshold(155);
-    console.log("[OCR] 3. binarise applied (very poor quality source)");
   }
 
   await pipeline.png({ compressionLevel: 1 }).toFile(outputPath);
